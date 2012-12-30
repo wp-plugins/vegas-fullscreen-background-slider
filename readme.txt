@@ -14,6 +14,8 @@ A fullscreen background slideshow plugin
 
 A fullscreen background slideshow plugin based on Jay Salvat's <a href="http://vegas.jaysalvat.com/">Vegas Background jQuery Plugin</a>
 
+You can see a working demo at <a href="http://demo.jamesdbruner.com/">http://demo.jamesdbruner.com/</a>
+
 == Installation ==
 
 1. Upload `vegas-slider.zip` to the `/wp-content/plugins/` directory
