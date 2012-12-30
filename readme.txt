@@ -28,7 +28,7 @@ e.g. [vegasslider id="565" fade="1000" overlay="http://mydomain.com/urloftheimag
 == Screenshots ==
 
 1. Frontend
-2. Backend
+2.
 
 == Changelog ==
 
