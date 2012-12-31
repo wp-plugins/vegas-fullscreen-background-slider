@@ -24,7 +24,9 @@ You can see a working demo at <a href="http://demo.jamesdbruner.com/">http://dem
 e.g. [vegasslider id="565" fade="1000" overlay="http://mydomain.com/urloftheimage/"]
 
 4. There is also a title parameter similar to id, fade and overlay though it's not for everyone so the default is off.  
+
 It adds the title and content from slider you made and adds them to the page on the bottom right. Similar to <a href="http://vegas.jaysalvat.com/">this</a>
+
 e.g. [vegasslider id="565" fade="1000" overlay="http://mydomain.com/urloftheimage/" title="yes"]
 Anything other than "yes" for the title and it wont work.
 
