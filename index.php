@@ -98,16 +98,16 @@ $height = null; // If you want to automatically resize all uploaded images then 
 function plu_admin_enqueue() {
     wp_enqueue_script('plupload-all');
  
-  wp_register_script('myplupload', plugins_url('js/Myplupload.js', __FILE__), array('jquery'));
-    wp_enqueue_script('myplupload');
+  wp_register_script('vegasplupload', plugins_url('js/vegasplupload.js', __FILE__), array('jquery'));
+    wp_enqueue_script('vegasplupload');
  
-  wp_register_style('myplupload', plugins_url('css/Myplupload.css', __FILE__));
-    wp_enqueue_style('myplupload');
+  wp_register_style('vegasplupload', plugins_url('css/vegasplupload.css', __FILE__));
+    wp_enqueue_style('vegasplupload');
 }
 add_action( 'admin_enqueue_scripts', 'plu_admin_enqueue' );
 
 
-function g_plupload_action() {
+function v_plupload_action() {
  
     // check ajax noonce
     $imgid = $_POST["imgid"];
@@ -120,10 +120,10 @@ function g_plupload_action() {
     echo $status['url'];
     exit;
 }
-add_action('wp_ajax_plupload_action', "g_plupload_action");
+add_action('wp_ajax_plupload_action', "v_plupload_action");
 
 
-function plupload_admin_head() {
+function vplupload_admin_head() {
 // place js config array for plupload
     $plupload_init = array(
         'runtimes' => 'html5,silverlight,flash,html4',
@@ -153,7 +153,7 @@ function plupload_admin_head() {
 </script>    
 <?php
 }
-add_action("admin_head", "plupload_admin_head");
+add_action("admin_head", "vplupload_admin_head");
 
 
 

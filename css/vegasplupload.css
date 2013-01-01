@@ -13,7 +13,7 @@
     height:5px;
 }
 .plupload-thumbs .thumb {
-    
+    width:300px;
     padding-right:25px;
   	padding-top:20px;
     float: left;
