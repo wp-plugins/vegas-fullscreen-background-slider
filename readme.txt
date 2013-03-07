@@ -19,11 +19,17 @@ You can see a working demo at <a href="http://demo.jamesdbruner.com/">http://dem
 Now there are a couple different parameters you can.  Here's a list of ALL of them:
 
 id  --  the id of the specific vegas slider you want to pull from
+
 fade  --  the amount of fade you want between two images in milliseconds
+
 delay  --  the amount of delay you want between two images in milliseconds
+
 overlay  --  ...an overlay over your images
+
 title  --  uses the title you designated in the admin area when you're creating the vegas slide
+
 arrows  --  adds supersized arrows on the left and right sides of your images to designated next/previous
+
 
 Keep in mind that you MUST have an id and that the shortcode is generated for you when you create a new vegas slide with the id you'll need.
 
