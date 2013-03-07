@@ -16,12 +16,6 @@ A fullscreen background slideshow plugin based on Jay Salvat's <a href="http://v
 
 You can see a working demo at <a href="http://demo.jamesdbruner.com/">http://demo.jamesdbruner.com/</a>
 
-== Installation ==
-
-1. Upload `vegas-slider.zip` to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Use the shortcode [vegasslider id="This id is generated when you create a new slide" fade="however much you want in miliseconds" overlay="url of a pattern"]
-
 Now there are a couple different parameters you can.  Here's a list of ALL of them:
 
 id  --  the id of the specific vegas slider you want to pull from
@@ -69,6 +63,12 @@ Save the file and you should be done.
 
 
 Still need help figuring this part out? We've solved this before, so just check here: http://wordpress.org/support/topic/vegas-slider-doesnt-work  
+
+== Installation ==
+
+1. Upload `vegas-slider.zip` to the `/wp-content/plugins/` directory
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Use the shortcode [vegasslider id="This id is generated when you create a new slide" fade="however much you want in miliseconds" overlay="url of a pattern"]
 
 
 
