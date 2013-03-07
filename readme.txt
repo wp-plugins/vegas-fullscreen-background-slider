@@ -16,7 +16,7 @@ A fullscreen background slideshow plugin based on Jay Salvat's <a href="http://v
 
 You can see a working demo at <a href="http://demo.jamesdbruner.com/">http://demo.jamesdbruner.com/</a>
 
-Now there are a couple different parameters you can.  Here's a list of ALL of them:
+Now there are a couple different parameters you can use.  Here's a list of ALL of them:
 
 id  --  the id of the specific vegas slider you want to pull from
 
