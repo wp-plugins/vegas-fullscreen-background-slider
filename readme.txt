@@ -41,7 +41,7 @@ Here's an example of a shortcode that you would put into the specific page you w
 If you want just one slider to appear on all pages you just need to follow these steps:
 
 
-First go to Appearance -> Editor and from there navigate to the front-page.php template on the right hand side.
+First go to Appearance -> Editor and from there navigate to the header.php template on the right hand side.
 
 You'll see some code that looks similar to this:
 
