@@ -4,7 +4,7 @@ Plugin Name: Vegas Slider
 Plugin URI: http://jamesdbruner.com
 Description: Fullscreen Vegas Slider based the Vegas Fullscreen jQuery Plugin 
 Author: James Bruner
-Version: 1.2
+Version: 1.3
 Author URI: http://jamesdbruner.com
 */
 
