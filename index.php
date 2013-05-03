@@ -25,6 +25,7 @@ Author URI: http://jamesdbruner.com
 */
 
 wp_enqueue_script('vegas', plugins_url('/js/jquery.vegas.js',__FILE__), array('jquery'), '1.0', 1 );
+wp_enqueue_style( 'vegas', plugins_url('/css/jquery.vegas.css', __FILE__));
 require_once(dirname(__FILE__).'/options.php');
 
 /* Vegas Slider Custom Post Type */
@@ -212,17 +213,19 @@ $images = get_post_meta( $atts['id'], 'img1', true );
   
 $args = array( 'post_type' => 'vegasslider', 'posts_per_page' => 1 );
 $loop = new WP_Query( $args );
-while ( $loop->have_posts() ) : $loop->the_post();
-  
+while ( $loop->have_posts() ) : $loop->the_post(); 
+
+ endwhile; 
+
 $image = explode(",", $images);
 
-$imagenum = count($image) ;
+$imagenum = count($image);
   
+
 if($imagenum > 1 && $atts['arrows'] == "yes"){ 
 echo '<nav id="nav-arrows" class="nav-arrows"><span id="nav-arrow-prev">Previous</span><span id="nav-arrow-next">Next</span></nav>'; 
 echo "<script>jQuery( '#nav-arrow-prev' ).click( function() { jQuery.vegas('previous'); });jQuery( '#nav-arrow-next' ).click( function() { jQuery.vegas('next'); });</script>";}
-   
-wp_enqueue_style( 'vegas', plugins_url('/css/jquery.vegas.css', __FILE__));
+  
 
 ?>
 <script>
@@ -236,7 +239,7 @@ jQuery( function() {
     echo "{ src:'" . $image[$i] . "', fade:" . $atts['fade'] . " },"; //get image
   }
 
-endwhile; ?>
+?>
   ]
 })('overlay', {
    src:'<?php echo $atts['overlay'] ?>' 
