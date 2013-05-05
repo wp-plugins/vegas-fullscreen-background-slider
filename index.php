@@ -24,7 +24,7 @@ Author URI: http://jamesdbruner.com
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-wp_enqueue_script('vegas', plugins_url('/js/jquery.vegas.js',__FILE__), array('jquery'), '1.0', 1 );
+wp_enqueue_script('vegas', plugins_url('/js/jquery.vegas.js',__FILE__), array('jquery'), '1.0', 0 );
 wp_enqueue_style( 'vegas', plugins_url('/css/jquery.vegas.css', __FILE__));
 require_once(dirname(__FILE__).'/options.php');
 
