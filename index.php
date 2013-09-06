@@ -4,11 +4,11 @@ Plugin Name: Vegas Slider
 Plugin URI: http://jamesdbruner.com
 Description: Fullscreen Vegas Slider based the Vegas Fullscreen jQuery Plugin 
 Author: James Bruner
-Version: 1.3
+Version: 1.4
 Author URI: http://jamesdbruner.com
 */
 
-/*  Copyright 2012  James Bruner  (email : jamesdbruner@gmail.com)
+/*  Copyright 2013  James Bruner  (email : jamesdbruner@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -24,7 +24,28 @@ Author URI: http://jamesdbruner.com
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-wp_enqueue_script('vegas', plugins_url('/js/jquery.vegas.js',__FILE__), array('jquery'), '1.0', 1 );
+function vegas_requires_wordpress_version() {
+	global $wp_version;
+	$plugin = plugin_basename( __FILE__ );
+	$plugin_data = get_plugin_data( __FILE__, false );
+
+	if ( version_compare($wp_version, "3.3", "<" ) ) {
+		if( is_plugin_active($plugin) ) {
+			deactivate_plugins( $plugin );
+			wp_die( "'".$plugin_data['Name']."' requires WordPress 3.3 or higher, and has been deactivated! Please upgrade WordPress and try again.<br /><br />Back to <a href='".admin_url()."'>WordPress admin</a>." );
+		}
+	}
+}
+add_action( 'admin_init', 'vegas_requires_wordpress_version' );
+
+// Register Script
+function vegasslider_scripts() {
+  wp_enqueue_script('vegas', plugins_url('/js/jquery.vegas.js',__FILE__), array('jquery'), '1.0', 1 );
+  wp_enqueue_style( 'vegas', plugins_url('/css/jquery.vegas.css', __FILE__));
+}
+add_action( 'wp_enqueue_scripts', 'vegasslider_scripts' );
+
+require_once(dirname(__FILE__).'/options.php');
 
 /* Vegas Slider Custom Post Type */
 add_action( 'init', 'create_vegasslider_post_type' );
@@ -35,9 +56,9 @@ function create_vegasslider_post_type() {
 	'name' => __( 'Vegas Slides' ),
 	'singular_name' => __( 'Slide' ),
 	'add_new' => _x('Add Slide', 'Slide'),
-	'add_new_item' => __('New Slide'),
+	'add_new_item' => __('New Slideshow'),
 	'edit_item' => __('Edit Slide'),
-	'new_item' => __('New Slide'),
+	'new_item' => __('New Slideshow'),
 	'view_item' => __('View Slide'),
 	'search_items' => __('Search Your Slides'),
 	'not_found' =>  __('Nothing found'),
@@ -50,15 +71,16 @@ function create_vegasslider_post_type() {
 	'query_var' => true,
 	'rewrite' => array('slug' => 'slides'),
 	'capability_type' => 'post',
-	'supports' => array('title', 'editor'),
+	'supports' => array('title'), //removed 'editor'
 	'taxonomies' => array( 'slide')));
 }
 
-//meta box
-add_action('admin_init', 'vegasslider_add_meta_boxes', 1);
-function vegasslider_add_meta_boxes() {
-	add_meta_box( 'vegasslider_images', 'Image Slides', 'vegasslider_meta_box_display', 'vegasslider', 'normal', 'default');
+//meta boxs
+add_action( 'add_meta_boxes', 'vegas_metaboxes_add' );
+function vegas_metaboxes_add() {
+  	add_meta_box( 'vegasslider_images', 'Image Slides', 'vegasslider_meta_box_display', 'vegasslider', 'normal', 'default');
 }
+
 
 //display metabox
 function vegasslider_meta_box_display() {
@@ -73,9 +95,29 @@ $multiple = true; // allow multiple files upload
 $width = null; // If you want to automatically resize all uploaded images then provide width here (in pixels)
  
 $height = null; // If you want to automatically resize all uploaded images then provide height here (in pixels)
+
+$vegas_options = get_option('vegas_options');
+
+$fade = $vegas_options['vegas_fade'];
+$delay = $vegas_options['vegas_delay'];
+$overlay = $vegas_options['vegas_overlay'];
+$arrows = $vegas_options['vegas_arrows']; 
+  if($arrows == 0){
+   $arrows = 'no'; 
+  }
+  if($arrows == 1){
+   $arrows = 'yes'; 
+  }
+$autoplay = $vegas_options['vegas_autoplay'];
+  if($autoplay == 0){
+   $autoplay = 'no'; 
+  }
+  if($autoplay == 1){
+   $autoplay = 'yes'; 
+  }
 ?>
 
-<p>Shortcode: <input type="text" spellcheck="false" onclick="this.focus();this.select()" readonly="readonly" value='<?php $shortcodeid = get_the_ID(); echo '[vegasslider id="' . $shortcodeid . '"]';?>'></p>
+<p>Shortcode: <input type="text" spellcheck="false" onclick="this.focus();this.select()" readonly="readonly" value='<?php $shortcodeid = get_the_ID(); echo '[vegasslider id="' . $shortcodeid . '" fade="' . $fade . '" delay="' . $delay . '" overlay="' . $overlay . '" arrows="' . $arrows . '" autoplay="' . $autoplay . '"]';?>'></p>
 
 <label>Upload Images</label>
 <input type="hidden" name="<?php echo $id; ?>" id="<?php echo $id; ?>" value="<?php echo $svalue; ?>" />
@@ -182,49 +224,104 @@ function vegasslider_meta_box_save($post_id) {
 add_action("save_post", "vegasslider_meta_box_save");
 
 
-
-
 /* Vegas slider Shortcode */
 function vegasslider($atts){
-extract(shortcode_atts(array('id','fade','overlay','title'), $atts));
+extract(shortcode_atts(array('id','fade' => '1500','overlay','arrows','delay' => '4000','autoplay' => 'yes'), $atts));
 $images = get_post_meta( $atts['id'], 'img1', true );
   
 $args = array( 'post_type' => 'vegasslider', 'posts_per_page' => 1 );
 $loop = new WP_Query( $args );
-while ( $loop->have_posts() ) : $loop->the_post();
-  
+while ( $loop->have_posts() ) : $loop->the_post(); 
+
+ endwhile; 
+
 $image = explode(",", $images);
+$imagenum = count($image);
+  
 
-$imagenum = count($image) - 1;
-wp_enqueue_style( 'vegas', plugins_url('/css/jquery.vegas.css', __FILE__));
+if($imagenum > 1 && $atts['arrows'] == "yes"){ 
+echo '<nav id="nav-arrows" class="nav-arrows"><span id="nav-arrow-prev">Previous</span><span id="nav-arrow-next">Next</span></nav>'; 
+echo "<script>jQuery( '#nav-arrow-prev' ).click( function() { jQuery.vegas('previous'); });jQuery( '#nav-arrow-next' ).click( function() { jQuery.vegas('next'); });</script>";}
+  
 ?>
-
-
 <script>
 jQuery( function() {
   jQuery.vegas('slideshow', {
+  delay:<?php echo $atts['delay']; ?>,
   backgrounds:[
 <?php
+
   for($i = 0;$i < $imagenum;$i++){
-    echo "{ src:'" . $image[$i] . "', fade:" . $atts['fade'] . " },"; //get image	 
+    echo "{ src:'" . $image[$i] . "', fade:" . $atts['fade'] . " },"; //get image
   }
-  	if($i = $imagenum){
-    echo "{ src:'" . $image[$i] . "', fade:" . $atts['fade'] . " }";
-  }
-endwhile; ?>
+
+?>
   ]
 })('overlay', {
    src:'<?php echo $atts['overlay'] ?>' 
 })
 });
 </script>
+
 <?php 
-if($atts['title'] == "yes"){
-echo '<div id="VegasContentOverlay">';
-the_title('<h1>','</h1>'); 
-the_content(); 
-echo '</div>';
-	}
+  
+if($atts['autoplay'] == "no"){
+  echo "<script>jQuery( function() {jQuery.vegas('pause'); });</script>";} 
 }  
-add_shortcode('vegasslider', 'vegasslider');  
-?>
+add_shortcode('vegasslider', 'vegasslider'); 
+
+function vegas_add_settings_link($links) {
+	$settings_link = '<a href="edit.php?post_type=vegasslider&page=options.php">Settings</a>';
+  	array_push( $links, $settings_link );
+  	return $links;
+}
+$plugin = plugin_basename(__FILE__);
+add_filter( "plugin_action_links_$plugin", 'vegas_add_settings_link' );
+
+//Global Option
+function isVegasGlobal(){
+$vegas_options = get_option('vegas_options');
+$vegas_global = $vegas_options['vegas_isglobal']; 
+if($vegas_global == 1){
+
+$fades = $vegas_options['vegas_fade'];
+$delay = $vegas_options['vegas_delay'];
+$overlay = $vegas_options['vegas_overlay'];
+$shortcodeid = $vegas_options['vegas_globalid'];
+$arrows = $vegas_options['vegas_arrows']; 
+  if($arrows == 0){
+   $arrows = 'no'; 
+  }
+  if($arrows == 1){
+   $arrows = 'yes'; 
+  }
+$autoplay = $vegas_options['vegas_autoplay'];
+  if($autoplay == 0){
+   $autoplay = 'no'; 
+  }
+  if($autoplay == 1){
+   $autoplay = 'yes'; 
+  }
+echo do_shortcode( '[vegasslider id="' . $shortcodeid . '" fade="' . $fades . '" delay="' . $delay . '" overlay="' . $overlay . '" arrows="' . $arrows . '" autoplay="' . $autoplay . '"]' );
+}
+
+}
+add_action( 'wp_footer', 'isVegasGlobal' );
+
+
+/* Maybe add an option if this is wanted.  Turned off for now
+Force to publish private
+//...but first make sure they are not 'trash' otherwise it is impossible to trash a post */
+
+$vegas_options = get_option('vegas_options');
+$private = $vegas_options['vegas_private'];
+if ($private == 1){
+function force_vegas_private($post)
+{
+    if ($post['post_type'] == 'vegasslider') {
+        if ($post['post_status'] != 'trash') $post['post_status'] = 'private';
+    }
+    return $post;
+}
+add_filter('wp_insert_post_data', 'force_vegas_private'); 
+} ?>

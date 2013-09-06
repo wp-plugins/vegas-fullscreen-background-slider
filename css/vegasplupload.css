@@ -28,5 +28,19 @@
 .ui-sortable  .thumb img {
     cursor:pointer;
 }
-.thumb:nth-child(1), .thumb:nth-child(4n+5){margin-left:40px;}
-input[readonly] {width:129px}
+
+input[readonly] {width:1250px;max-width:100%;}
+
+.remove-icon{border-radius: 2px;
+border-color: red;
+border: 2px;
+padding: 12px;
+text-decoration: none;
+background-color: white;
+color: black;
+font-weight: bold;
+font-size: 18px;
+position: relative;
+top: -300px;
+right: -270px;
+}

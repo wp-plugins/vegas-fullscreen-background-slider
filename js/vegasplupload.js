@@ -105,7 +105,7 @@ function plu_show_thumbs(imgId) {
     var images=imagesS.split(",");
     for(var i=0; i<images.length; i++) {
         if(images[i]) {
-            var thumb=$('<div class="thumb" id="thumb' + imgId +  i + '"><img src="' + images[i] + '" alt="" /><div class="thumbi"><a id="thumbremovelink' + imgId + i + '" href="#">Remove</a></div> <div class="clear"></div></div>');
+            var thumb=$('<div class="thumb" id="thumb' + imgId +  i + '"><img src="' + images[i] + '" alt="" /><div class="thumbi"><a id="thumbremovelink' + imgId + i + '" class="remove-icon" href="#">X</a></div> <div class="clear"></div></div>');
             thumbsC.append(thumb);
             thumb.find("a").click(function() {
                 var ki=$(this).attr("id").replace("thumbremovelink" + imgId , "");
