@@ -37,6 +37,7 @@ function vegas_add_defaults() {
 		$arr = array(	"vegas_autoplay" => "1",
 				"vegas_fade" => "5000",
 				"vegas_delay" => "4000",
+				"vegas_private_posts" => "0",
 
 		);
 		update_option('vegas_options', $arr);
@@ -139,8 +140,11 @@ function vegas_render_form() {
 						<!-- Autoplay Checkbox -->
 						<label><input name="vegas_options[vegas_autoplay]" type="checkbox" value="1" <?php if (isset($options['vegas_autoplay'])) { checked('1', $options['vegas_autoplay']); } ?> /> Autoplay <em>(Automatically start sliding through the slideshow?)</em></label><br />
 
+						<!-- Poster Checkbox -->
+						<label><input name="vegas_options[vegas_poster]" type="checkbox" value="1" <?php if (isset($options['vegas_poster'])) { checked('1', $options['vegas_poster']); } ?> /> Poster <em>(Sets it to stop rotating once it's reached the last image.  Leaving the last image as a poster like effect/fullscreen background image)</em></label><br />
+
 						<!-- Private Checkbox -->
-						<label><input name="vegas_options[vegas_private]" type="checkbox" value="1" <?php if (isset($options['vegas_private'])) { checked('1', $options['vegas_autoplay']); } ?> /> Automatically set the visibility for each slideshow to private</label><br />
+						<label><input name="vegas_options[vegas_private_posts]" type="checkbox" value="1" <?php if (isset($options['vegas_private_posts'])) { checked('1', $options['vegas_private_posts']); } ?> /> Automatically set the visibility for each slideshow to private</label><br />
 
 						<!-- Global Option -->
 						<label><input name="vegas_options[vegas_isglobal]" type="checkbox" value="1" <?php if (isset($options['vegas_isglobal'])) { checked('1', $options['vegas_isglobal']); } ?> /> Global <em>(Display on every page?)</em></label><br />
@@ -168,8 +172,9 @@ function vegas_render_form() {
 // Sanitize and validate input. Accepts an array, return a sanitized array.
 function vegas_validate_options($input) {
 	 // strip html from textboxes
-	$input['vegas_fade'] =  wp_filter_nohtml_kses($input['vegas_fade']); // Sanitize textbox input (strip html tags, and escape characters)
-	$input['vegas_delay'] =  wp_filter_nohtml_kses($input['vegas_delay']); // Sanitize textbox input (strip html tags, and escape characters)
-	$input['vegas_overlay'] =  wp_filter_nohtml_kses($input['vegas_overlay']); // Sanitize textbox input (strip html tags, and escape characters)
+	$input['vegas_fade'] =  wp_filter_nohtml_kses($input['vegas_fade']);
+	$input['vegas_delay'] =  wp_filter_nohtml_kses($input['vegas_delay']);
+	$input['vegas_overlay'] =  wp_filter_nohtml_kses($input['vegas_overlay']);
+	$input['vegas_globalid'] =  wp_filter_nohtml_kses($input['vegas_globalid']);
 	return $input;
 }

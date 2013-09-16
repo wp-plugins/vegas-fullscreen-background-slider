@@ -4,7 +4,7 @@ Plugin Name: Vegas Slider
 Plugin URI: http://jamesdbruner.com
 Description: Fullscreen Vegas Slider based the Vegas Fullscreen jQuery Plugin 
 Author: James Bruner
-Version: 1.4
+Version: 1.5
 Author URI: http://jamesdbruner.com
 */
 
@@ -241,8 +241,7 @@ $imagenum = count($image);
 
 if($imagenum > 1 && $atts['arrows'] == "yes"){ 
 echo '<nav id="nav-arrows" class="nav-arrows"><span id="nav-arrow-prev">Previous</span><span id="nav-arrow-next">Next</span></nav>'; 
-echo "<script>jQuery( '#nav-arrow-prev' ).click( function() { jQuery.vegas('previous'); });jQuery( '#nav-arrow-next' ).click( function() { jQuery.vegas('next'); });</script>";}
-  
+echo "<script>jQuery( '#nav-arrow-prev' ).click( function() { jQuery.vegas('previous'); });jQuery( '#nav-arrow-next' ).click( function() { jQuery.vegas('next'); });</script>";} 
 ?>
 <script>
 jQuery( function() {
@@ -261,6 +260,18 @@ jQuery( function() {
    src:'<?php echo $atts['overlay'] ?>' 
 })
 });
+
+<?php
+$vegas_options = get_option('vegas_options');
+$vegas_poster = $vegas_options['vegas_poster'];
+if ($vegas_poster == 1){ ?>
+
+jQuery(document).ready(function(){ 
+    setTimeout(function(){ 
+	jQuery( function(){ jQuery.vegas('pause'); } )}, <?php $vegastimeout = $delay * $imagenum; echo $vegastimeout; ?>);
+});
+<?php } ?>
+
 </script>
 
 <?php 
@@ -271,7 +282,7 @@ if($atts['autoplay'] == "no"){
 add_shortcode('vegasslider', 'vegasslider'); 
 
 function vegas_add_settings_link($links) {
-	$settings_link = '<a href="edit.php?post_type=vegasslider&page=options.php">Settings</a>';
+	$settings_link = '<a href="edit.php?post_type=vegasslider&page=vegas-fullscreen-background-slider/options.php">Settings</a>';
   	array_push( $links, $settings_link );
   	return $links;
 }
@@ -311,17 +322,18 @@ add_action( 'wp_footer', 'isVegasGlobal' );
 
 /* Maybe add an option if this is wanted.  Turned off for now
 Force to publish private
-//...but first make sure they are not 'trash' otherwise it is impossible to trash a post */
+...but first make sure they are not 'trash' otherwise it is impossible to trash a post */
 
+function force_vegas_private($post){
 $vegas_options = get_option('vegas_options');
-$private = $vegas_options['vegas_private'];
-if ($private == 1){
-function force_vegas_private($post)
-{
+$vegas_private = $vegas_options['vegas_private_posts'];
+if ($vegas_private == 1){
+
     if ($post['post_type'] == 'vegasslider') {
         if ($post['post_status'] != 'trash') $post['post_status'] = 'private';
     }
     return $post;
 }
+}
 add_filter('wp_insert_post_data', 'force_vegas_private'); 
-} ?>
+  ?>
