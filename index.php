@@ -214,7 +214,7 @@ function vegasslider_meta_box_save($post_id) {
   if (!current_user_can('edit_post', $post_id))
   	return;
   
-  $svalue = $_POST['img1'];
+  //$svalue = $_POST['img1'];
     
   if( isset( $_POST['img1'] ) )
      add_post_meta($post_id, "img1", $_POST['img1'], true) or update_post_meta( $post_id, "img1", $_POST['img1'] );
@@ -281,6 +281,7 @@ if($atts['autoplay'] == "no"){
 }  
 add_shortcode('vegasslider', 'vegasslider'); 
 
+
 function vegas_add_settings_link($links) {
 	$settings_link = '<a href="edit.php?post_type=vegasslider&page=vegas-fullscreen-background-slider/options.php">Settings</a>';
   	array_push( $links, $settings_link );
@@ -322,7 +323,7 @@ add_action( 'wp_footer', 'isVegasGlobal' );
 
 /* Maybe add an option if this is wanted.  Turned off for now
 Force to publish private
-...but first make sure they are not 'trash' otherwise it is impossible to trash a post */
+...but first make sure they are not 'trash' otherwise it is impossible to trash a post
 
 function force_vegas_private($post){
 $vegas_options = get_option('vegas_options');
@@ -335,5 +336,5 @@ if ($vegas_private == 1){
     return $post;
 }
 }
-add_filter('wp_insert_post_data', 'force_vegas_private'); 
-  ?>
+add_filter('wp_insert_post_data', 'force_vegas_private'); */
+?>
