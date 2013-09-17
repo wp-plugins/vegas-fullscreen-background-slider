@@ -143,8 +143,8 @@ function vegas_render_form() {
 						<!-- Poster Checkbox -->
 						<label><input name="vegas_options[vegas_poster]" type="checkbox" value="1" <?php if (isset($options['vegas_poster'])) { checked('1', $options['vegas_poster']); } ?> /> Poster <em>(Sets it to stop rotating once it's reached the last image.  Leaving the last image as a poster like effect/fullscreen background image)</em></label><br />
 
-						<!-- Private Checkbox -->
-						<label><input name="vegas_options[vegas_private_posts]" type="checkbox" value="1" <?php if (isset($options['vegas_private_posts'])) { checked('1', $options['vegas_private_posts']); } ?> /> Automatically set the visibility for each slideshow to private</label><br />
+						<!-- Private Checkbox 
+						<label><input name="vegas_options[vegas_private_posts]" type="checkbox" value="1" <?php if (isset($options['vegas_private_posts'])) { checked('1', $options['vegas_private_posts']); } ?> /> Automatically set the visibility for each slideshow to private</label><br /> -->
 
 						<!-- Global Option -->
 						<label><input name="vegas_options[vegas_isglobal]" type="checkbox" value="1" <?php if (isset($options['vegas_isglobal'])) { checked('1', $options['vegas_isglobal']); } ?> /> Global <em>(Display on every page?)</em></label><br />
