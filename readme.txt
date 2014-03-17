@@ -32,13 +32,14 @@ There are 7 parameters total that you can use with this shortcode.  The **ID** b
 
 List of parameters:
 
-*id
-*fade
-*delay
-*overlay
-*arrows
-*autoplay
-*poster
+*   id
+*   fade
+*   delay
+*   overlay
+*   arrows
+*   autoplay
+*   poster
+
 
 `
 [vegas id="565" fade="2500" delay ="4500" overlay="http://mydomain.com/urloftheimage/" arrows="yes" autoplay="yes" poster="yes"]
@@ -59,10 +60,6 @@ List of parameters:
 After you've added images to your slideshow and generated a shortcode you just need to copy the shortcode and paste it into the content of any page or post you want the slideshow to show up on.  If you want it to show up on every page you'll have to add some code to the header.php file in your theme.  See the codex's <a href="http://codex.wordpress.org/Function_Reference/do_shortcode">do_shortcode article</a> for more information on the matter.
 
 <a href="https://wordpress.org/plugins/full-screen-page-background-image-slideshow/screenshots/">See screenshot #5</a> for a description of the shortcode parameters.
-
-== Frequently asked questions ==
-
-
 
 == Screenshots ==
 
