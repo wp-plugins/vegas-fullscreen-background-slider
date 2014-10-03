@@ -1,0 +1,72 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+    $atts = shortcode_atts(array('id' => '','fade' => '2000','overlay' => '','arrows' => 'yes','poster' => 'yes','delay' => '4000','autoplay' => 'yes', 'random' => ''), $atts);
+    $images = get_post_meta( $atts['id'], 'imgIDs', true );
+    //Variables
+    $fade = $atts['fade']; $delay = $atts['delay']; $overlay = $atts['overlay']; $autoplay = $atts['autoplay']; $poster = $atts['poster']; $arrows = $atts['arrows']; 
+
+    //Randomize
+    if($atts['random'] == 'yes'){
+
+    $array=explode(",",$images);  
+    shuffle($array);  
+    $images = implode($array,",");  
+        
+    }
+
+    $image = explode(",", $images);
+    $imagenum = count($image);
+    $replacement = '';
+
+    if($imagenum > 1 && $arrows == "yes"){
+    $replacement .= <<<HEREDOC
+<nav id="nav-arrows" class="nav-arrows">
+		<span id="nav-arrow-prev">Previous</span>
+		<span id="nav-arrow-next">Next</span>
+	</nav>
+
+HEREDOC;
+
+    $replacement .= <<<HEREDOC
+	<script> 
+		jQuery( '#nav-arrow-prev' ).click( function() { jQuery.vegas('previous'); }); 
+		jQuery( '#nav-arrow-next' ).click( function() { jQuery.vegas('next'); });
+	</script>
+HEREDOC;
+    }
+
+    $replacement .= <<<HEREDOC
+
+<script>
+    jQuery( function() {
+    jQuery.vegas('slideshow', {
+    delay:$delay,
+    backgrounds:[
+HEREDOC;
+
+    for($i = 0;$i < $imagenum;$i++){ $image_attributes = wp_get_attachment_image_src( $image[$i], "full" ); $replacement .= "{ src:'" . $image_attributes[0] . "', fade:" . $fade . "},"; }
+
+    $replacement .= <<<HEREDOC
+] 
+}) 
+HEREDOC;
+//NOTE If there is no overlay, don't print the 'overlay' option with an empty source into the javascript. It gives you a 404 for the overlay image.
+    if( $overlay ){ $replacement .= <<<HEREDOC
+    ('overlay', {src:'$overlay'}) 
+HEREDOC;
+    }
+    $replacement .= <<<HEREDOC
+}); 
+</script>
+
+HEREDOC;
+  
+    if($autoplay == "no"){
+          $replacement .= "<script>jQuery( function() {jQuery.vegas('pause'); });</script>";
+      }
+
+    if($poster == "yes" && $autoplay == "yes"){
+	  $vegastimeout = $delay * $imagenum;
+	  $replacement .= "<script>jQuery(document).ready(function(){ setTimeout(function(){ jQuery( function(){ jQuery.vegas('pause'); } )},  $vegastimeout ); });</script>";
+    }
