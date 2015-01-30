@@ -5,7 +5,7 @@ Plugin Name: WP Vegas
 Plugin URI: http://jamesdbruner.com
 Description: Fullscreen Vegas Slider based on the <a target="_blank" href="http://vegas.jaysalvat.com/">Vegas Background jQuery Plugin</a> by <a href="http://jaysalvat.com/">Jay Salvat</a>
 Author: James Bruner
-Version: 2.0
+Version: 2.2
 Author URI: http://jamesdbruner.com
 
   Copyright 2014  James Bruner  (email : jamesdbruner@gmail.com)

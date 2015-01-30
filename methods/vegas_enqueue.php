@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 	global $post;
     wp_register_script('vegas', plugins_url('../js/jquery.vegas.js',__FILE__), array('jquery'), null, 1 );
     wp_register_style('vegas', plugins_url('../css/jquery.vegas.css', __FILE__), '', null, 'all');

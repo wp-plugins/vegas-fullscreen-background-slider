@@ -23,7 +23,8 @@ Delay: <input type="text" id="delay" spellcheck="false" value="">
 Overlay: <input type="text" id="overlay" spellcheck="false" value="">
 Arrows: <select id="arrows" name="arrows"><option value="no">No</option><option value="yes">Yes</option></select>
 Autoplay: <select id="autoplay" name="autoplay"><option value="no">No</option><option value="yes">Yes</option></select>
-Poster: <select id="poster" name="poster"><option value="no">No</option><option value="yes">Yes</option></select><br>
+Poster: <select id="poster" name="poster"><option value="no">No</option><option value="yes">Yes</option></select>
+Random: <select id="random" name="random"><option value="no">No</option><option value="yes">Yes</option></select><br>
 <input type="button" class="button" name="vegas_generate_button" id="vegas_generate_button" value="Generate Shortcode!" />
 <input type="button" class="button" name="vegas_help_button" id="vegas_help_button" value="Explain What All of This Means..." />
 <br><br>
@@ -42,6 +43,8 @@ Poster: <select id="poster" name="poster"><option value="no">No</option><option 
 <p>Weather or not to automatically start playing through the slideshow when the user first loads the page.</p>
 <h3>Poster</h3>
 <p>The slideshow will stop on the last image in the slideshow but autoplay must be enabled for this to work.</p>
+<h3>Random</h3>
+<p>The slides in your slideshow will display in a random ordrer if this is set to yes.</p>
 <hr>
 <p>After you've generated your shortcode remember to hit Publish or Update so you can come back and copy/paste the shortcode later if you need to!</p>
 <input type="button" class="button" name="vegas_help-back_button" id="vegas_help-back_button" value="Thanks! Now take me back to the shortcode generator!" />

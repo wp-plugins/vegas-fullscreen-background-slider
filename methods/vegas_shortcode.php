@@ -1,10 +1,19 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-    $atts = shortcode_atts(array('id' => '','fade' => '2000','overlay' => '','arrows' => 'yes','poster' => 'yes','delay' => '4000','autoplay' => 'yes'), $atts);
+    $atts = shortcode_atts(array('id' => '','fade' => '2000','overlay' => '','arrows' => 'yes','poster' => 'yes','delay' => '4000','autoplay' => 'yes', 'random' => ''), $atts);
     $images = get_post_meta( $atts['id'], 'imgIDs', true );
     //Variables
     $fade = $atts['fade']; $delay = $atts['delay']; $overlay = $atts['overlay']; $autoplay = $atts['autoplay']; $poster = $atts['poster']; $arrows = $atts['arrows']; 
+
+    //Randomize
+    if($atts['random'] == 'yes'){
+
+    $array=explode(",",$images);  
+    shuffle($array);  
+    $images = implode($array,",");  
+        
+    }
 
     $image = explode(",", $images);
     $imagenum = count($image);
