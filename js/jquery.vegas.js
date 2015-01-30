@@ -1,0 +1,31 @@
+// ----------------------------------------------------------------------------
+// Vegas - Fullscreen Backgrounds and Slideshows with jQuery. 
+// Add awesome fullscreen backgrounds to your webpages.
+// v1.3.5 - released 2013-12-16 13:28
+ 
+// Licensed under the MIT license.
+
+// http://vegas.jaysalvat.com/
+// ----------------------------------------------------------------------------
+// Copyright (C) 2010-2014 Jay Salvat
+// http://jaysalvat.com/
+// ----------------------------------------------------------------------------
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files ( the "Software" ), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+// ----------------------------------------------------------------------------
+(function(e){function d(t,n){var r={align:"center",valign:"center"};e.extend(r,n);if(t.height()===0){t.load(function(){d(e(this),n)});return}var i=y(),s=i.width,o=i.height,u=t.width(),a=t.height(),f=o/s,l=a/u,c,h,p,v,m;if(f>l){c=o/l;h=o}else{c=s;h=s*l}m={width:c+"px",height:h+"px",top:"auto",bottom:"auto",left:"auto",right:"auto"};if(!isNaN(parseInt(r.valign,10))){m.top=0-(h-o)/100*parseInt(r.valign,10)+"px"}else if(r.valign=="top"){m.top=0}else if(r.valign=="bottom"){m.bottom=0}else{m.top=(o-h)/2}if(!isNaN(parseInt(r.align,10))){m.left=0-(c-s)/100*parseInt(r.align,10)+"px"}else if(r.align=="left"){m.left=0}else if(r.align=="right"){m.right=0}else{m.left=(s-c)/2}t.css(m)}function v(){r.prependTo("body").fadeIn()}function m(){r.fadeOut("fast",function(){e(this).remove()})}function g(){if(e("body").css("backgroundImage")){return e("body").css("backgroundImage").replace(/url\("?(.*?)"?\)/i,"$1")}}function y(){var e=window,t="inner";if(!("innerWidth"in window)){e=document.documentElement||document.body;t="client"}return{width:e[t+"Width"],height:c?e[t+"Height"]+h:e[t+"Height"]}}var t=e("<img />").addClass("vegas-background"),n=e("<div />").addClass("vegas-overlay"),r=e("<div />").addClass("vegas-loading"),i=e(),s=null,o=[],u=0,a=5e3,f=function(){},l,c=navigator.userAgent.match(/iPod|iPhone/i),h=76,p={init:function(n){var r={src:g(),align:"center",valign:"center",fade:0,loading:true,load:function(){},complete:function(){}};e.extend(r,e.vegas.defaults.background,n);if(r.loading){v()}var s=t.clone();s.css({position:"fixed",left:"0px",top:"0px"}).bind("load",function(){if(s==i){return}e(window).bind("load resize.vegas",function(e){d(s,r)});if(i.is("img")){i.stop();s.hide().insertAfter(i).fadeIn(r.fade,function(){e(".vegas-background").not(this).remove();e("body").trigger("vegascomplete",[this,u-1]);r.complete.apply(s,[u-1])})}else{s.hide().prependTo("body").fadeIn(r.fade,function(){e("body").trigger("vegascomplete",[this,u-1]);r.complete.apply(this,[u-1])})}i=s;d(i,r);if(r.loading){m()}e("body").trigger("vegasload",[i.get(0),u-1]);r.load.apply(i.get(0),[u-1]);if(u){e("body").trigger("vegaswalk",[i.get(0),u-1]);r.walk.apply(i.get(0),[u-1])}}).attr("src",r.src);return e.vegas},destroy:function(t){if(!t||t=="background"){e(".vegas-background, .vegas-loading").remove();e(window).unbind("*.vegas");i=e()}if(!t||t=="overlay"){e(".vegas-overlay").remove()}clearInterval(l);return e.vegas},overlay:function(t){var r={src:null,opacity:null};e.extend(r,e.vegas.defaults.overlay,t);n.remove();n.css({margin:"0",padding:"0",position:"fixed",left:"0px",top:"0px",width:"100%",height:"100%"});if(r.src===false){n.css("backgroundImage","none")}if(r.src){n.css("backgroundImage","url("+r.src+")")}if(r.opacity){n.css("opacity",r.opacity)}n.prependTo("body");return e.vegas},slideshow:function(t,n){var r={step:u,delay:a,preload:false,loading:true,backgrounds:o,walk:f};e.extend(r,e.vegas.defaults.slideshow,t);if(r.backgrounds!=o){if(!t.step){r.step=0}if(!t.walk){r.walk=function(){}}if(r.preload){e.vegas("preload",r.backgrounds)}}o=r.backgrounds;a=r.delay;u=r.step;f=r.walk;clearInterval(l);if(!o.length){return e.vegas}var c=function(){if(u<0){u=o.length-1}if(u>=o.length||!o[u-1]){u=0}var t=o[u++];t.walk=r.walk;t.loading=r.loading;if(typeof t.fade=="undefined"){t.fade=r.fade}if(t.fade>r.delay){t.fade=r.delay}e.vegas(t)};c();if(!n){s=false;e("body").trigger("vegasstart",[i.get(0),u-1])}if(!s){l=setInterval(c,r.delay)}return e.vegas},next:function(){var t=u;if(u){e.vegas("slideshow",{step:u},true);e("body").trigger("vegasnext",[i.get(0),u-1,t-1])}return e.vegas},previous:function(){var t=u;if(u){e.vegas("slideshow",{step:u-2},true);e("body").trigger("vegasprevious",[i.get(0),u-1,t-1])}return e.vegas},jump:function(t){var n=u;if(u){e.vegas("slideshow",{step:t},true);e("body").trigger("vegasjump",[i.get(0),u-1,n-1])}return e.vegas},stop:function(){var t=u;u=0;s=null;clearInterval(l);e("body").trigger("vegasstop",[i.get(0),t-1]);return e.vegas},pause:function(){s=true;clearInterval(l);e("body").trigger("vegaspause",[i.get(0),u-1]);return e.vegas},get:function(e){if(e===null||e=="background"){return i.get(0)}if(e=="overlay"){return n.get(0)}if(e=="step"){return u-1}if(e=="paused"){return s}},preload:function(t){var n=[];for(var r in t){if(t[r].src){var i=document.createElement("img");i.src=t[r].src;n.push(i)}}return e.vegas}};e.vegas=function(t){if(p[t]){return p[t].apply(this,Array.prototype.slice.call(arguments,1))}else if(typeof t==="object"||!t){return p.init.apply(this,arguments)}else{e.error("Method "+t+" does not exist")}};e.vegas.defaults={background:{},slideshow:{},overlay:{}}})(jQuery)
